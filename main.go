@@ -127,6 +127,14 @@ type Walking struct {
 func (w Walking) Calories() float64 {
 	speed := w.meanSpeed() * KmHInMsec
 	speedPow := math.Pow(speed, 2)
+
+	//
+	//здесь не совсем понял про деление на 0, проверку добавил, но отпишитесь в комментарии, всё ли верно или чего-то не понял
+	//
+
+	if CmInM == 0 || w.Height == 0 {
+		return 0
+	}
 	return ((CaloriesWeightMultiplier*w.Training.Weight + (speedPow/(w.Height/CmInM))*CaloriesSpeedHeightMultiplier*w.Training.Weight) * w.Training.Duration.Hours() * MinInHours)
 }
 
